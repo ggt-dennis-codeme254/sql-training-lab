@@ -20,6 +20,8 @@ The following sections describe each table, its columns, and the information sto
 
 **Note:** `PK` identifies a primary key, while `FK` identifies a foreign key referencing another table. These labels are included in the descriptions for clarity.
 
+**Nullability:** A column marked `NULL` in its data type may contain missing values. Every other column is required and always has a value.
+
 ### Naming Conventions
 
 All table and column names use `snake_case`: lowercase words separated by underscores, such as `order_items` and `customer_id`. Table names are plural.
@@ -45,7 +47,7 @@ Examples include Laptops, Smartphones, Monitors, Accessories, and Networking Equ
 |---|---|---|
 | category_id | INTEGER | Primary key. Uniquely identifies each category. |
 | category_name | VARCHAR(100) | Name of the product category. |
-| description | VARCHAR(255) | Brief description of the category. |
+| description | VARCHAR(255), NULL | Brief description of the category, if provided. |
 
 # 2. suppliers
 
@@ -56,7 +58,7 @@ The `suppliers` table stores information about the companies that supply product
 | supplier_id | INTEGER | Primary key. Uniquely identifies each supplier. |
 | supplier_name | VARCHAR(150) | Name of the supplier company. |
 | contact_email | VARCHAR(150) | Supplier's contact email address. |
-| country | VARCHAR(100) | Country in which the supplier operates. |
+| country | VARCHAR(100), NULL | Country in which the supplier operates, if known. |
 
 # 3. products
 
@@ -83,7 +85,7 @@ The `customers` table stores information about people who purchase products from
 | customer_id | INTEGER | Primary key. Uniquely identifies each customer. |
 | first_name | VARCHAR(100) | Customer's first name. |
 | last_name | VARCHAR(100) | Customer's last name. |
-| email | VARCHAR(150) | Customer's email address. |
+| email | VARCHAR(150) | Customer's email address. Unique: no two customers share an email. |
 | city | VARCHAR(100) | City in which the customer resides. |
 | country | VARCHAR(100) | Country in which the customer resides. |
 | registered_at | DATE | Date the customer registered with Technova. |
@@ -98,7 +100,7 @@ Examples include Sales, Customer Support, Logistics, IT, and Finance.
 |---|---|---|
 | department_id | INTEGER | Primary key. Uniquely identifies each department. |
 | department_name | VARCHAR(100) | Name of the department. |
-| location | VARCHAR(100) | Location associated with the department. |
+| location | VARCHAR(100), NULL | Location associated with the department, if any. |
 
 # 6. employees
 
@@ -127,7 +129,7 @@ Each order belongs to a customer and may be assigned to an employee.
 | customer_id | INTEGER | Foreign key referencing `customers`. Identifies the customer who placed the order. |
 | employee_id | INTEGER, NULL | Foreign key referencing `employees`. Identifies the employee responsible for the order, if assigned. |
 | order_date | DATE | Date the order was placed. |
-| order_status | VARCHAR(30) | Current status of the order, such as Pending, Processing, Shipped, Delivered, or Cancelled. |
+| order_status | VARCHAR(30) | Current status of the order. One of: `Pending`, `Processing`, `Shipped`, `Delivered`, or `Cancelled`. |
 
 # 8. order_items
 
@@ -140,7 +142,7 @@ An order can contain multiple products, and a product can appear in multiple ord
 | order_item_id | INTEGER | Primary key. Uniquely identifies each order item. |
 | order_id | INTEGER | Foreign key referencing `orders`. Identifies the order containing the item. |
 | product_id | INTEGER | Foreign key referencing `products`. Identifies the product purchased. |
-| quantity | INTEGER | Number of units of the product included in the order. |
+| quantity | INTEGER | Number of units of the product included in the order. Always greater than zero. |
 | unit_price | NUMERIC(10,2) | Price per unit at the time the order was placed. |
 
 **Important:** The `unit_price` in this table represents the historical purchase price, whereas `products.unit_price` represents the current selling price. These values may differ.
@@ -157,8 +159,8 @@ An order may have multiple payment records, allowing Technova to track payments 
 | order_id | INTEGER | Foreign key referencing `orders`. Identifies the order associated with the payment. |
 | payment_date | DATE | Date the payment was recorded. |
 | amount | NUMERIC(10,2) | Monetary amount of the payment. |
-| payment_method | VARCHAR(30) | Method used to make the payment, such as Card, PayPal, or Bank Transfer. |
-| payment_status | VARCHAR(30) | Status of the payment, such as Pending, Completed, or Failed. |
+| payment_method | VARCHAR(30) | Method used to make the payment. One of: `Card`, `PayPal`, or `Bank Transfer`. |
+| payment_status | VARCHAR(30) | Status of the payment. One of: `Pending`, `Completed`, or `Failed`. |
 
 # 10. warehouses
 
@@ -175,7 +177,7 @@ The `warehouses` table stores information about the locations where Technova kee
 
 The `inventory` table tracks the quantity of each product stored at individual warehouses.
 
-A product may be stored in multiple warehouses, and each warehouse may store multiple products.
+A product may be stored in multiple warehouses, and each warehouse may store multiple products. Each product has at most one inventory record per warehouse.
 
 | Column Name | Data Type | Description |
 |---|---|---|
