@@ -22,9 +22,7 @@
     "vitepress": "^2.0.0-alpha.20"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
-    "dotenv": "^18.0.9",
-    "pg": "^8.23.1"
+    "dotenv": "^18.0.9"
   }
 }
