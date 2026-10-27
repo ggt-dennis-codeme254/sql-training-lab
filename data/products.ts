@@ -1,0 +1,142 @@
+import type { Prisma } from "../generated/prisma/client";
+
+// ISO date-only strings parse as UTC midnight, so the stored DATE never shifts
+// with the machine's timezone. Never use new Date(year, month, day) here.
+const d = (iso: string) => new Date(iso);
+
+// Prices are strings so Decimal values stay exact (no floating-point drift).
+//
+// Category IDs:  1 Laptops, 2 Smartphones, 3 Tablets, 4 Monitors, 5 Keyboards,
+//   6 Mice, 7 Headphones & Headsets, 8 Webcams, 9 Printers & Scanners,
+//   10 External Storage, 11 Memory & Components, 12 Routers, 13 Network Switches,
+//   14 Wi-Fi Access Points (no products), 15 Cables & Adapters,
+//   16 Chargers & Power Banks, 17 Docking Stations & Hubs, 18 Speakers,
+//   19 Smartwatches & Wearables (no products), 20 Bags & Cases (one product)
+//
+// Suppliers with no products: 14, 25, 29.
+// Products sold below cost (clearance): 51, 57.
+
+export const products: Prisma.ProductCreateManyInput[] = [
+  // ---- 1. Laptops (9) ----
+  { ProductId: 1,  ProductName: "Zephyr 14 Ultrabook",                CategoryId: 1,  SupplierId: 7,  UnitPrice: "899.00",  CostPrice: "640.00",  CreatedAt: d("2021-01-15") },
+  { ProductId: 2,  ProductName: "Zephyr 16 Pro",                      CategoryId: 1,  SupplierId: 7,  UnitPrice: "1499.00", CostPrice: "1090.00", CreatedAt: d("2022-03-10") },
+  { ProductId: 3,  ProductName: "Helix 15 Everyday Laptop",           CategoryId: 1,  SupplierId: 11, UnitPrice: "649.00",  CostPrice: "470.00",  CreatedAt: d("2020-09-01") },
+  { ProductId: 4,  ProductName: "Helix 16 Studio",                    CategoryId: 1,  SupplierId: 11, UnitPrice: "1899.00", CostPrice: "1380.00", CreatedAt: d("2023-05-22") },
+  { ProductId: 5,  ProductName: "Nimbus 14 Student Laptop",           CategoryId: 1,  SupplierId: 23, UnitPrice: "429.00",  CostPrice: "330.00",  CreatedAt: d("2021-08-30") },
+  { ProductId: 6,  ProductName: "Nimbus 15 Business Laptop",          CategoryId: 1,  SupplierId: 23, UnitPrice: "799.00",  CostPrice: "585.00",  CreatedAt: d("2022-09-12") },
+  { ProductId: 7,  ProductName: "Vortex 17 Gaming Laptop",            CategoryId: 1,  SupplierId: 7,  UnitPrice: "2499.00", CostPrice: "1850.00", CreatedAt: d("2023-11-03") },
+  { ProductId: 8,  ProductName: "Vortex 16 Creator Laptop",           CategoryId: 1,  SupplierId: 7,  UnitPrice: "1899.00", CostPrice: "1400.00", CreatedAt: d("2024-02-14") },
+  { ProductId: 9,  ProductName: "Zephyr 13 Lite",                     CategoryId: 1,  SupplierId: 7,  UnitPrice: "399.00",  CostPrice: "355.00",  CreatedAt: d("2025-03-18") },
+
+  // ---- 2. Smartphones (8) ----
+  { ProductId: 10, ProductName: "Aurora S1 Smartphone",               CategoryId: 2,  SupplierId: 18, UnitPrice: "699.00",  CostPrice: "505.00",  CreatedAt: d("2021-03-05") },
+  { ProductId: 11, ProductName: "Aurora S1 Plus Smartphone",          CategoryId: 2,  SupplierId: 18, UnitPrice: "899.00",  CostPrice: "650.00",  CreatedAt: d("2021-03-05") },
+  { ProductId: 12, ProductName: "Aurora S2 Pro Smartphone",           CategoryId: 2,  SupplierId: 18, UnitPrice: "1199.00", CostPrice: "860.00",  CreatedAt: d("2023-09-14") },
+  { ProductId: 13, ProductName: "Pulse A10 Smartphone",               CategoryId: 2,  SupplierId: 4,  UnitPrice: "199.00",  CostPrice: "150.00",  CreatedAt: d("2022-01-20") },
+  { ProductId: 14, ProductName: "Pulse A20 Smartphone",               CategoryId: 2,  SupplierId: 4,  UnitPrice: "279.00",  CostPrice: "210.00",  CreatedAt: d("2022-06-08") },
+  { ProductId: 15, ProductName: "Pulse A30 5G Smartphone",            CategoryId: 2,  SupplierId: 4,  UnitPrice: "349.00",  CostPrice: "262.00",  CreatedAt: d("2023-02-27") },
+  { ProductId: 16, ProductName: "Pulse A50 5G Smartphone",            CategoryId: 2,  SupplierId: 4,  UnitPrice: "499.00",  CostPrice: "372.00",  CreatedAt: d("2024-04-16") },
+  { ProductId: 17, ProductName: "Lumen Fold Z Smartphone",            CategoryId: 2,  SupplierId: 18, UnitPrice: "1599.00", CostPrice: "1250.00", CreatedAt: d("2024-10-01") },
+
+  // ---- 3. Tablets (5) ----
+  { ProductId: 18, ProductName: "Slate 10 Tablet",                    CategoryId: 3,  SupplierId: 4,  UnitPrice: "149.00",  CostPrice: "112.00",  CreatedAt: d("2021-06-17") },
+  { ProductId: 19, ProductName: "Slate 11 Plus Tablet",               CategoryId: 3,  SupplierId: 19, UnitPrice: "329.00",  CostPrice: "245.00",  CreatedAt: d("2022-10-05") },
+  { ProductId: 20, ProductName: "Slate Pro 12 Tablet",                CategoryId: 3,  SupplierId: 19, UnitPrice: "649.00",  CostPrice: "480.00",  CreatedAt: d("2023-04-11") },
+  { ProductId: 21, ProductName: "Slate Mini 8 Tablet",                CategoryId: 3,  SupplierId: 4,  UnitPrice: "199.00",  CostPrice: "155.00",  CreatedAt: d("2024-01-30") },
+  { ProductId: 22, ProductName: "Slate Pro 13 Max Tablet",            CategoryId: 3,  SupplierId: 11, UnitPrice: "899.00",  CostPrice: "690.00",  CreatedAt: d("2025-02-12") },
+
+  // ---- 4. Monitors (7) ----
+  { ProductId: 23, ProductName: "ClearView 22 HD Monitor",            CategoryId: 4,  SupplierId: 3,  UnitPrice: "119.00",  CostPrice: "84.00",   CreatedAt: d("2020-06-10") },
+  { ProductId: 24, ProductName: "ClearView 24 FHD Monitor",           CategoryId: 4,  SupplierId: 3,  UnitPrice: "149.00",  CostPrice: "108.00",  CreatedAt: d("2020-06-10") },
+  { ProductId: 25, ProductName: "ClearView 27 QHD Monitor",           CategoryId: 4,  SupplierId: 16, UnitPrice: "299.00",  CostPrice: "218.00",  CreatedAt: d("2021-09-09") },
+  { ProductId: 26, ProductName: "ClearView 27 4K Monitor",            CategoryId: 4,  SupplierId: 16, UnitPrice: "449.00",  CostPrice: "330.00",  CreatedAt: d("2022-11-21") },
+  { ProductId: 27, ProductName: "ClearView 32 Curved Monitor",        CategoryId: 4,  SupplierId: 16, UnitPrice: "399.00",  CostPrice: "295.00",  CreatedAt: d("2023-03-08") },
+  { ProductId: 28, ProductName: "Vista 34 Ultrawide Monitor",         CategoryId: 4,  SupplierId: 19, UnitPrice: "599.00",  CostPrice: "445.00",  CreatedAt: d("2023-12-04") },
+  { ProductId: 29, ProductName: "Vista 32 Pro 4K Monitor",            CategoryId: 4,  SupplierId: 19, UnitPrice: "899.00",  CostPrice: "670.00",  CreatedAt: d("2025-01-09") },
+
+  // ---- 5. Keyboards (6) ----
+  { ProductId: 30, ProductName: "KeyFlow Wired Keyboard",             CategoryId: 5,  SupplierId: 5,  UnitPrice: "24.99",   CostPrice: "14.50",   CreatedAt: d("2020-07-01") },
+  { ProductId: 31, ProductName: "KeyFlow Wireless Keyboard",          CategoryId: 5,  SupplierId: 5,  UnitPrice: "39.99",   CostPrice: "24.00",   CreatedAt: d("2021-02-18") },
+  { ProductId: 32, ProductName: "TypeMaster Mechanical Keyboard",     CategoryId: 5,  SupplierId: 12, UnitPrice: "89.99",   CostPrice: "55.00",   CreatedAt: d("2021-11-02") },
+  { ProductId: 33, ProductName: "TypeMaster Compact 60% Keyboard",    CategoryId: 5,  SupplierId: 12, UnitPrice: "79.99",   CostPrice: "49.00",   CreatedAt: d("2022-08-16") },
+  { ProductId: 34, ProductName: "ErgoType Split Keyboard",            CategoryId: 5,  SupplierId: 23, UnitPrice: "129.99",  CostPrice: "85.00",   CreatedAt: d("2023-06-27") },
+  { ProductId: 35, ProductName: "TypeMaster RGB Pro Keyboard",        CategoryId: 5,  SupplierId: 12, UnitPrice: "179.00",  CostPrice: "118.00",  CreatedAt: d("2024-07-23") },
+
+  // ---- 6. Mice (6) ----
+  { ProductId: 36, ProductName: "GlidePoint Wired Mouse",             CategoryId: 6,  SupplierId: 5,  UnitPrice: "12.99",   CostPrice: "6.50",    CreatedAt: d("2020-07-01") },
+  { ProductId: 37, ProductName: "GlidePoint Wireless Mouse",          CategoryId: 6,  SupplierId: 5,  UnitPrice: "24.99",   CostPrice: "14.00",   CreatedAt: d("2021-02-18") },
+  { ProductId: 38, ProductName: "GlidePoint Silent Click Mouse",      CategoryId: 6,  SupplierId: 5,  UnitPrice: "24.99",   CostPrice: "15.20",   CreatedAt: d("2022-04-12") },
+  { ProductId: 39, ProductName: "Precision Ergo Vertical Mouse",      CategoryId: 6,  SupplierId: 12, UnitPrice: "49.99",   CostPrice: "30.00",   CreatedAt: d("2022-12-14") },
+  { ProductId: 40, ProductName: "Precision Gaming Mouse X",           CategoryId: 6,  SupplierId: 12, UnitPrice: "59.99",   CostPrice: "36.00",   CreatedAt: d("2023-08-01") },
+  { ProductId: 41, ProductName: "Orbit Trackball Mouse",              CategoryId: 6,  SupplierId: 27, UnitPrice: "69.99",   CostPrice: "44.00",   CreatedAt: d("2024-03-12") },
+
+  // ---- 7. Headphones & Headsets (6) ----
+  { ProductId: 42, ProductName: "SoundArc Wired Earbuds",             CategoryId: 7,  SupplierId: 30, UnitPrice: "19.99",   CostPrice: "9.50",    CreatedAt: d("2020-10-15") },
+  { ProductId: 43, ProductName: "SoundArc Wireless Earbuds",          CategoryId: 7,  SupplierId: 21, UnitPrice: "79.99",   CostPrice: "48.00",   CreatedAt: d("2022-02-02") },
+  { ProductId: 44, ProductName: "SoundArc Studio Headphones",         CategoryId: 7,  SupplierId: 21, UnitPrice: "149.00",  CostPrice: "95.00",   CreatedAt: d("2022-07-19") },
+  { ProductId: 45, ProductName: "SoundArc Noise Cancelling Pro",      CategoryId: 7,  SupplierId: 21, UnitPrice: "349.00",  CostPrice: "228.00",  CreatedAt: d("2023-10-10") },
+  { ProductId: 46, ProductName: "CommTalk USB Headset",               CategoryId: 7,  SupplierId: 12, UnitPrice: "49.99",   CostPrice: "29.00",   CreatedAt: d("2021-05-03") },
+  { ProductId: 47, ProductName: "CommTalk Wireless Headset",          CategoryId: 7,  SupplierId: 30, UnitPrice: "99.99",   CostPrice: "61.00",   CreatedAt: d("2023-01-25") },
+
+  // ---- 8. Webcams (3) ----
+  { ProductId: 48, ProductName: "ViewCam 1080p Webcam",               CategoryId: 8,  SupplierId: 5,  UnitPrice: "49.99",   CostPrice: "29.50",   CreatedAt: d("2020-08-20") },
+  { ProductId: 49, ProductName: "ViewCam 4K Pro Webcam",              CategoryId: 8,  SupplierId: 20, UnitPrice: "129.99",  CostPrice: "84.00",   CreatedAt: d("2022-05-30") },
+  { ProductId: 50, ProductName: "ClearStream Conference Camera",      CategoryId: 8,  SupplierId: 20, UnitPrice: "149.00",  CostPrice: "102.00",  CreatedAt: d("2024-05-15") },
+
+  // ---- 9. Printers & Scanners (3) ----
+  { ProductId: 51, ProductName: "InkJet Home 2000 Printer",           CategoryId: 9,  SupplierId: 11, UnitPrice: "79.00",   CostPrice: "82.00",   CreatedAt: d("2020-11-10") }, // clearance: below cost
+  { ProductId: 52, ProductName: "LaserOffice 3300 Printer",           CategoryId: 9,  SupplierId: 15, UnitPrice: "249.00",  CostPrice: "175.00",  CreatedAt: d("2021-10-18") },
+  { ProductId: 53, ProductName: "ScanPro Flatbed Scanner",            CategoryId: 9,  SupplierId: 20, UnitPrice: "129.00",  CostPrice: "88.00",   CreatedAt: d("2022-09-28") },
+
+  // ---- 10. External Storage (5) ----
+  { ProductId: 54, ProductName: "PocketDrive 1TB SSD",                CategoryId: 10, SupplierId: 10, UnitPrice: "99.99",   CostPrice: "64.00",   CreatedAt: d("2021-04-22") },
+  { ProductId: 55, ProductName: "PocketDrive 2TB SSD",                CategoryId: 10, SupplierId: 10, UnitPrice: "169.00",  CostPrice: "118.00",  CreatedAt: d("2022-03-03") },
+  { ProductId: 56, ProductName: "PocketDrive 4TB SSD",                CategoryId: 10, SupplierId: 8,  UnitPrice: "299.00",  CostPrice: "215.00",  CreatedAt: d("2024-06-18") },
+  { ProductId: 57, ProductName: "DataSafe 2TB Portable HDD",          CategoryId: 10, SupplierId: 8,  UnitPrice: "59.99",   CostPrice: "61.00",   CreatedAt: d("2020-09-14") }, // clearance: below cost
+  { ProductId: 58, ProductName: "FlashKey 64GB USB Drive",            CategoryId: 10, SupplierId: 10, UnitPrice: "9.99",    CostPrice: "4.20",    CreatedAt: d("2020-06-10") },
+
+  // ---- 11. Memory & Components (4) ----
+  { ProductId: 59, ProductName: "RAM Ready DDR4 16GB Kit",            CategoryId: 11, SupplierId: 18, UnitPrice: "54.99",   CostPrice: "38.00",   CreatedAt: d("2021-07-12") },
+  { ProductId: 60, ProductName: "RAM Ready DDR5 32GB Kit",            CategoryId: 11, SupplierId: 18, UnitPrice: "119.00",  CostPrice: "88.00",   CreatedAt: d("2023-02-06") },
+  { ProductId: 61, ProductName: "InternalX NVMe 1TB SSD",             CategoryId: 11, SupplierId: 8,  UnitPrice: "89.99",   CostPrice: "61.00",   CreatedAt: d("2022-01-17") },
+  { ProductId: 62, ProductName: "InternalX NVMe 2TB SSD",             CategoryId: 11, SupplierId: 8,  UnitPrice: "149.00",  CostPrice: "110.00",  CreatedAt: d("2024-08-29") },
+
+  // ---- 12. Routers (3) ----
+  { ProductId: 63, ProductName: "NetBridge AX1800 Router",            CategoryId: 12, SupplierId: 9,  UnitPrice: "89.99",   CostPrice: "58.00",   CreatedAt: d("2021-12-01") },
+  { ProductId: 64, ProductName: "NetBridge AX3000 Router",            CategoryId: 12, SupplierId: 9,  UnitPrice: "149.00",  CostPrice: "102.00",  CreatedAt: d("2023-07-19") },
+  { ProductId: 65, ProductName: "Bluestone Mesh Router 3-Pack",       CategoryId: 12, SupplierId: 13, UnitPrice: "249.00",  CostPrice: "180.00",  CreatedAt: d("2024-09-03") },
+
+  // ---- 13. Network Switches (2) ----
+  { ProductId: 66, ProductName: "LinkHub 8-Port Gigabit Switch",      CategoryId: 13, SupplierId: 9,  UnitPrice: "29.99",   CostPrice: "17.50",   CreatedAt: d("2021-01-28") },
+  { ProductId: 67, ProductName: "LinkHub 24-Port Managed Switch",     CategoryId: 13, SupplierId: 17, UnitPrice: "199.00",  CostPrice: "140.00",  CreatedAt: d("2023-05-09") },
+
+  // ---- 14. Wi-Fi Access Points (0 products) ----
+
+  // ---- 15. Cables & Adapters (6) ----
+  { ProductId: 68, ProductName: "Technova Basics HDMI Cable 2m",      CategoryId: 15, SupplierId: 24, UnitPrice: "9.99",    CostPrice: "3.80",    CreatedAt: d("2020-06-10") },
+  { ProductId: 69, ProductName: "Technova Basics USB-C Cable 1m",     CategoryId: 15, SupplierId: 24, UnitPrice: "7.99",    CostPrice: "2.90",    CreatedAt: d("2020-06-10") },
+  { ProductId: 70, ProductName: "Technova Basics Ethernet Cable 5m",  CategoryId: 15, SupplierId: 22, UnitPrice: "8.99",    CostPrice: "3.40",    CreatedAt: d("2020-06-10") },
+  { ProductId: 71, ProductName: "DisplayLink USB-C to HDMI Adapter",  CategoryId: 15, SupplierId: 2,  UnitPrice: "24.99",   CostPrice: "13.00",   CreatedAt: d("2022-02-24") },
+  { ProductId: 72, ProductName: "DisplayLink DisplayPort Cable 2m",   CategoryId: 15, SupplierId: 28, UnitPrice: "14.99",   CostPrice: "6.80",    CreatedAt: d("2022-02-24") },
+  { ProductId: 73, ProductName: "PowerLine USB Extension Cable 3m",   CategoryId: 15, SupplierId: 22, UnitPrice: "12.99",   CostPrice: "6.00",    CreatedAt: d("2023-04-04") },
+
+  // ---- 16. Chargers & Power Banks (4) ----
+  { ProductId: 74, ProductName: "VoltEdge 20W USB-C Charger",         CategoryId: 16, SupplierId: 1,  UnitPrice: "19.99",   CostPrice: "9.20",    CreatedAt: d("2021-03-23") },
+  { ProductId: 75, ProductName: "VoltEdge 65W GaN Charger",           CategoryId: 16, SupplierId: 6,  UnitPrice: "49.99",   CostPrice: "28.00",   CreatedAt: d("2023-01-12") },
+  { ProductId: 76, ProductName: "PowerCell 10000mAh Power Bank",      CategoryId: 16, SupplierId: 26, UnitPrice: "29.99",   CostPrice: "17.00",   CreatedAt: d("2022-06-22") },
+  { ProductId: 77, ProductName: "PowerCell 20000mAh Power Bank",      CategoryId: 16, SupplierId: 6,  UnitPrice: "49.99",   CostPrice: "31.00",   CreatedAt: d("2024-02-05") },
+
+  // ---- 17. Docking Stations & Hubs (2) ----
+  { ProductId: 78, ProductName: "DockMate USB-C Hub 7-in-1",          CategoryId: 17, SupplierId: 6,  UnitPrice: "49.99",   CostPrice: "29.00",   CreatedAt: d("2022-10-17") },
+  { ProductId: 79, ProductName: "DockMate Thunderbolt Dock Pro",      CategoryId: 17, SupplierId: 15, UnitPrice: "229.00",  CostPrice: "165.00",  CreatedAt: d("2024-11-11") },
+
+  // ---- 18. Speakers (3) ----
+  { ProductId: 80, ProductName: "BoomBox Mini Bluetooth Speaker",     CategoryId: 18, SupplierId: 27, UnitPrice: "29.99",   CostPrice: "16.00",   CreatedAt: d("2021-09-30") },
+  { ProductId: 81, ProductName: "BoomBox Studio Speaker",             CategoryId: 18, SupplierId: 21, UnitPrice: "199.00",  CostPrice: "132.00",  CreatedAt: d("2023-06-13") },
+  { ProductId: 82, ProductName: "Savannah Sound Portable Speaker",    CategoryId: 18, SupplierId: 26, UnitPrice: "59.99",   CostPrice: "38.00",   CreatedAt: d("2024-04-09") },
+
+  // ---- 19. Smartwatches & Wearables (0 products) ----
+
+  // ---- 20. Bags & Cases (1) ----
+  { ProductId: 83, ProductName: "TravelPro Laptop Backpack",          CategoryId: 20, SupplierId: 24, UnitPrice: "59.99",   CostPrice: "34.00",   CreatedAt: d("2021-08-03") },
+];
