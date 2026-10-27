@@ -6,7 +6,7 @@ Welcome to Technova, a fictional technology retail company that sells a variety 
 
 Like any growing business, Technova needs a way to manage its products, customers, orders, payments, suppliers, employees, and inventory.
 
-To support these operations, Technova uses a relational database built with PostgreSQL.
+To support these operations, Technova uses a relational database built with Microsoft SQL Server.
 
 Throughout SQL Power Hour, you'll work with Technova's database to solve practical problems using SQL. Each topic introduces a set of questions based on the same database, allowing you to apply what you've learned in a consistent, realistic environment.
 
