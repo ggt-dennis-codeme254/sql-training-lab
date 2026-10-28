@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "db-update": "npx prisma db push",
+    "seed": "npx tsx index.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "vitepress": "^2.0.0-alpha.20"
   },
   "dependencies": {
+    "@prisma/adapter-mssql": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "dotenv": "^18.0.9"
   }
