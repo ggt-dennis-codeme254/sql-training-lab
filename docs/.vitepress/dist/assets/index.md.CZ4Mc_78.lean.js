@@ -1,0 +1,1 @@
+import{G as e,W as t,n,rt as r}from"./chunks/framework.CzKPlK1V.js";var i=JSON.parse(`{"title":"Welcome to SQL Power Hour","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}`),a={name:`index.md`};function o(n,i,a,o,s,c){return r(),t(`div`,null,[...i[0]||=[e("",13)]])}var s=n(a,[[`render`,o]]);export{i as __pageData,s as default};
