@@ -1,1 +1,0 @@
-import{G as e,W as t,n,rt as r}from"./chunks/framework.CzKPlK1V.js";var i=JSON.parse(`{"title":"TechNova Database Setup","description":"","frontmatter":{},"headers":[],"relativePath":"setup.md","filePath":"setup.md"}`),a={name:`setup.md`};function o(n,i,a,o,s,c){return r(),t(`div`,null,[...i[0]||=[e("",112)]])}var s=n(a,[[`render`,o]]);export{i as __pageData,s as default};
