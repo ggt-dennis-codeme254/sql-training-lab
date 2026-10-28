@@ -12,6 +12,7 @@ export default defineConfig({
           { text: 'Welcome to SQL Power Hour', link: '/' },
           { text: 'Introducing Technova', link: '/introducing-technova' },
           { text: 'Setup', link: '/setup.md' },
+          { text: 'Basic Select', link: '/basic-select.md' },
         ]
       }
     ],
