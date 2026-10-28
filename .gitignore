@@ -147,10 +147,10 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
-/generated/prisma
+# /generated/prisma
 
-/generated/prisma
+# /generated/prisma
 
-/generated/prisma
+# /generated/prisma
 
-/generated/prisma
+# /generated/prisma
